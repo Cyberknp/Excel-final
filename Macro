@@ -1,0 +1,140 @@
+
+
+Sub DynamicMacro()
+
+Declare variables for PivotTable name, Chart name, and Chart title
+
+Dim pivotTableName As String
+
+Dim chartName As String
+
+Dim chartTitle As String
+
+Prompt user to enter PivotTable number pivotTableName InputBox("Enter the number of the PivotTable:")
+
+If pivotTableName = "" Then
+
+MsgBox "PivotTable number cannot be empty. Exiting macro."
+
+Exit Sub
+
+End If
+
+Prompt user to enter Chart number
+
+chartName = InputBox("Enter the number of the Chart:")
+
+If chartName = "" Then
+
+MsgBox "Chart number cannot be empty. Exiting macro."
+
+Exit Sub
+
+End If
+
+Prompt user to enter Chart Title
+
+chartTitle InputBox("Enter the month of the Chart:")
+
+If chartTitle = "" Then
+
+MsgBox "Chart title cannot be empty. Exiting macro."
+
+Exit Sub
+
+End If
+
+Concatenate names with user input to identify PivotTable, Chart, and Chart Title
+
+pivotTableName = "PivotTable" & pivotTableName
+
+chartName = "Chart " & chartName chartTitle chartTitle & "Net Pay"
+
+Set PivotTable layout
+
+With ActiveSheet. PivotTables (pivotTableName). PivotFields ("Department") .Orientation xlRowField
+
+.Position = 1
+
+End With
+
+Add "Net Pay (NP)" field to PivotTable as "Sum of Net Pay (NP)" ActiveSheet. PivotTables (pivotTableName). AddDataField ActiveSheet. PivotTables (pivotT
+Sub RefreshAllPivotTables ()
+
+Dim pt As PivotTable
+
+Loop through each worksheet in the workbook For Each ws In ThisWorkbook.Worksheets
+
+Loop through each pivot table in the worksheet
+
+For Each pt In ws.PivotTables
+
+Refresh the pivot table
+
+pt.RefreshTable
+
+Next pt
+
+Next ws
+
+End Sub
+
+Sub UpdatePivotCharts()
+
+Dim department As String
+
+Dim ws As Worksheet
+
+Dim pt As PivotTable
+
+Dim co As ChartObject
+
+Dim pt field As PivotField
+
+Dim pt filter As PivotFilter
+
+Dim dataFieldExists As Boolean
+
+Prompt user to enter department department InputBox ("Enter Department (or type 'All' to display all departments): If department ""Then
+
+MsgBox "Department cannot be empty. Exiting macro."
+
+Exit Sub
+
+End If
+
+Set reference to the currently active worksheet
+
+Set ws ActiveSheet
+
+Loop through each pivot table in the worksheet
+
+For Each pt In ws.PivotTables
+
+Check if the pivot table has a "Department" field
+
+For Each pt field In pt. PivotFields If pt field. SourceName "Department" Then
+
+If LCase (department) "all" Then Clear all existing filters on the "Department" field pt field.ClearAllFilters
+
+Else
+
+Filter pivot table by selected department
+
+pt_field.ClearAllFilters Set pt_filter pt_field.Pivot Filters.Add(Type:=xlCaptionEquals, Va
+
+End If
+
+Exit For Exit loop once department filter is applied or cleared
+
+End If
+
+Next pt_field
+
+Check if "Net Pay (NP)" field already exists in the pivot table
+
+dataFieldExists False
+
+For Each pt field In pt. DataFields
+
+If pt field.SourceName "Net Pay (NP)" Then dataFieldExists True
