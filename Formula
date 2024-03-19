@@ -1,0 +1,6 @@
+=IF(SUM(L13:O13)>50000,3000,2000)-provident fund 
+=SUM(L13:O13)-SUM(P13:Q13)-gross salary
+travelling allowance 0.15
+dearence allowane 0.5
+house rent 0.05
+SUM(L7:O7)*0.1
